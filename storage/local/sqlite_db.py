@@ -107,8 +107,15 @@ if __name__ == '__main__':
         'fuel_level': 50.2
     })
 
-    rows = db.read('engine_data')
-    print(rows)
+    print('Before update\n')
+    rows_before = db.read('engine_data')
+    print(rows_before)
+
+    db.update(table='engine_data', data={'rpm': 1500, 'temperature':90.0}, where={'timestamp': '2026-03-20 12:00:00'})
+
+    print('\nAfter update')
+    rows_after = db.read('engine_data')
+    print(rows_after)
 
     db.disconnect()
 
