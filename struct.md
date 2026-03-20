@@ -3,7 +3,8 @@
 ```
 diesel/
 ├── DB/                         # SQLite database files
-│   └── diesel_data.db          # Local SQLite database
+│   ├── diesel_data.db          # Local SQLite database
+│   └── .gitkeep
 ├── dev/                        # Python virtual environment
 ├── devices/                    # Device communication modules
 │   ├── __init__.py
@@ -21,8 +22,11 @@ diesel/
 ├── storage/                    # Storage backend modules
 │   ├── __init__.py
 │   ├── db_interface.py         # Abstract storage interface
-│   └── local/                  # Local storage implementations
-│       └── sqlite_db.py        # SQLite storage implementation
+│   ├── local/                  # Local storage implementations
+│   │   └── sqlite_db.py        # SQLite storage implementation
+│   └── cloud/                  # Cloud storage implementations
+│       └── neon_db.py          # Neon (PostgreSQL) storage implementation
+├── .env.local                  # Local environment variables
 ├── .gitignore
 ├── requirements.txt
 └── struct.md                   # This file

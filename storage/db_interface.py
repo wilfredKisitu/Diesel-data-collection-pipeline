@@ -12,7 +12,7 @@ class DatabaseInterface:
         return self.sys_logs
     
     def log_to_sys(self, msg):
-        msg_dict = {'time': datetime.now(), 'msg': msg}
+        msg_dict = {'time': datetime.now().strftime("%d %B %Y %H:%M"), 'msg': msg}
         self.sys_logs.append(msg_dict)
 
     @abstractmethod

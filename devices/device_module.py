@@ -32,7 +32,7 @@ class DataReader:
 
     def log_reading(self, device, read_status):
         log_dict = {
-            'time': datetime.now(), 
+            'time': datetime.now().strftime("%d %B %Y %H:%M"), 
             'device': device, 
             'status': read_status 
         }
@@ -49,7 +49,7 @@ class DataReader:
         len_logs = len(self.logs)
         bool_mask = tot_reads == len_logs
 
-        log_dict = {'time': datetime.now(), 'msg': msg, 'tot reads': tot_reads, 'tot_logs': len_logs}
+        log_dict = {'time': datetime.now().strftime("%d %B %Y %H:%M"), 'msg': msg, 'tot reads': tot_reads, 'tot_logs': len_logs}
 
         if not bool_mask:
             updated_msg = 'Incosistent dims of readings'
