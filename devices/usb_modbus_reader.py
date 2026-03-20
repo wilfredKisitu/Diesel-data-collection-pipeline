@@ -1,7 +1,7 @@
 from pymodbus.client import ModbusSerialClient
-from device_module import DataReader
-from status_codes import SUCCESS
-from device_types import Device
+from devices.device_module import DataReader
+from devices.status_codes import SUCCESS
+from devices.device_types import Device
 
 
 class USBModbusReader(DataReader):
@@ -20,9 +20,12 @@ class USBModbusReader(DataReader):
         ret = self.client.connect()
         if ret:
             self.sys_log(f'Connected to {self.name} via {self.port}')
+            self.connected = True
+
 
         else:
             self.sys_log(f'Connection to {self.name} failed')
+
 
     def read_data(self):
         result = self.client.read_holding_registers(0, count=10, device_id=self.slave_id)
@@ -53,10 +56,12 @@ if __name__ == '__main__':
 
     reader = USBModbusReader()
     reader.connect()
+    print(reader.is_connected())
 
     reader.read_data()
 
     print(reader.get_sys_logs())
+    print(reader.is_connected())
 
     print('Test passed')
 

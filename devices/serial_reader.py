@@ -1,8 +1,8 @@
 import serial
 from time import sleep
-from device_module import DataReader
-from device_types import Device
-from status_codes import SUCCESS
+from devices.device_module import DataReader
+from devices.device_types import Device
+from devices.status_codes import SUCCESS
 
 class SerialReader(DataReader):
 
@@ -18,8 +18,10 @@ class SerialReader(DataReader):
         try:
             self.ser = serial.Serial(self.port, self.baudrate, timeout=1)
             self.sys_log(f'Connecting to {self.name} succeeded')
+            self.connected = True
         except:
             self.sys_log(f'Connection to {self.name} failed')
+
 
     def read_data(self):
         try:
@@ -56,6 +58,8 @@ if __name__ == '__main__':
 
     reader.connect()
     print(reader.get_sys_logs())
+
+    print(reader.is_connected())
     
     reader.read_data()
     print(reader.get_sys_logs())

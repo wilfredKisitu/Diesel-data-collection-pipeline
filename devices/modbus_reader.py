@@ -1,8 +1,8 @@
 from pymodbus.client import ModbusSerialClient
 from pymodbus.framer import FramerRTU
-from device_module import DataReader
-from device_types import Device
-from status_codes import SUCCESS
+from devices.device_module import DataReader
+from devices.device_types import Device
+from devices.status_codes import SUCCESS
 
 class ModbusReader(DataReader):
 
@@ -16,9 +16,11 @@ class ModbusReader(DataReader):
         ret = self.client.connect()
         if ret:
             self.sys_log(f'Connected to {self.name}')
+            self.connected = True
 
         else:
             self.sys_log(f'Failed to connect to {self.name}')
+
             
 
     def read_data(self):
@@ -54,8 +56,12 @@ if __name__ == '__main__':
     reader.connect()
     print(reader.get_sys_logs())
 
+    print(reader.is_connected())
+
     reader.connect()
     print(reader.get_sys_logs())
+
+    print(hasattr(reader, 'is_connected'))
 
 
 

@@ -17,6 +17,10 @@ class DataReader:
         self.sys_logs = []
         self.tot_reads = 0
         self.failed_reads = 0
+        self.connected = False 
+
+    def is_connected(self):
+        return self.connected
 
 
     def get_sys_logs(self):

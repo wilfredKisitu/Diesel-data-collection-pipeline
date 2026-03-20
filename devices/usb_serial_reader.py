@@ -1,7 +1,7 @@
-from device_module import DataReader
-from status_codes import SUCCESS
-from device_types import Device
-from serial_reader import SerialReader
+from devices.device_module import DataReader
+from devices.status_codes import SUCCESS
+from devices.device_types import Device
+from devices.serial_reader import SerialReader
 
 class USBSerialReader(SerialReader):
     def __init__(self, port='/dev/ttyUSB0', baudrate=9600):
@@ -19,6 +19,8 @@ if __name__ == '__main__':
 
     reader = USBSerialReader()
     reader.connect()
+
+    print(reader.is_connected())
 
     reader.read_data()
 
