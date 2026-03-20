@@ -29,6 +29,7 @@ class SerialReader(DataReader):
                 return data
             else:
                 self.sys_log(f'Connection to {self.name} is undefined')
+                return None
         except:
             self.sys_log(f'Reading data from {self.name} failed')
             return None
