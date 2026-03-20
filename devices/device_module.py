@@ -1,5 +1,7 @@
 from abc import  abstractmethod
 from datetime import datetime
+import os 
+
 
 """
 TODO: Log the readings to persistent file system
@@ -16,7 +18,14 @@ class DataReader:
         self.tot_reads = 0
         self.failed_reads = 0
 
+
+    def get_sys_logs(self):
+        return self.sys_logs
     
+    def get_readings_logs(self):
+        return self.logs
+    
+
     def log_reading(self, device, read_status):
         log_dict = {
             'time': datetime.now(), 
@@ -31,15 +40,16 @@ class DataReader:
         else:
             self.failed_reads += 1
 
-    def log_sys_readings(self):
+    def sys_log(self, msg=None):
         tot_reads  = self.tot_reads + self.failed_reads
         len_logs = len(self.logs)
         bool_mask = tot_reads == len_logs
 
-        log_dict = {'time': datetime.now(), 'err': 'Unknow system err occured', 'tot reads': tot_reads, 'tot logs': len_logs}
+        log_dict = {'time': datetime.now(), 'msg': msg, 'tot reads': tot_reads, 'tot_logs': len_logs}
 
         if not bool_mask:
-            log_dict['err'] = 'Incosistent dims of readings'
+            updated_msg = 'Incosistent dims of readings'
+            log_dict['msg'] = updated_msg if msg == None else f'{msg}, {updated_msg}' 
 
         self.sys_logs.append(log_dict)
             
@@ -62,8 +72,6 @@ class DataReader:
 
 
 if __name__ == "__main__":
-    import os
-    os.system('clear')
 
     print('Testing Device Reader Abstract class')
 
@@ -74,10 +82,8 @@ if __name__ == "__main__":
     data_reader.log_reading('serial', True)
     assert len(data_reader.logs) == data_reader.tot_reads, f'Incosistent shape'
 
-    print(data_reader.tot_reads, data_reader.failed_reads)
 
-    data_reader.log_sys_readings()
-    data_reader.log_sys_readings()
+    data_reader.sys_log('Failed to connect to device')
 
     print(data_reader.sys_logs)
 
