@@ -2,7 +2,7 @@ from pymodbus.client import ModbusSerialClient
 from pymodbus.framer import FramerRTU
 from device_module import DataReader
 from device_types import Device
-from status_codes import SUCCESS, FAILED
+from status_codes import SUCCESS
 
 class ModbusReader(DataReader):
 
@@ -50,6 +50,7 @@ if __name__ == '__main__':
     print('Testing modus connection module')
 
     reader = ModbusReader()
+    assert reader.name == 'Modbus', f'Inconsistent name initition'
     reader.connect()
     print(reader.get_sys_logs())
 

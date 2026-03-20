@@ -2,7 +2,7 @@ import serial
 from time import sleep
 from device_module import DataReader
 from device_types import Device
-from status_codes import SUCCESS, FAILED
+from status_codes import SUCCESS
 
 class SerialReader(DataReader):
 
@@ -49,6 +49,7 @@ if __name__ == '__main__':
 
     reader = SerialReader()
     assert reader.name == 'Serial', f'Incorrect device type'
+
 
     reader.connect()
     print(reader.get_sys_logs())

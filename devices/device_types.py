@@ -3,8 +3,7 @@ from enum import Enum
 class Device(Enum):
     SERIAL = 1
     MODBUS = 2
-    CANBUS = 3
-    FUTURE_PROTOCOLS = 4
+    FUTURE_PROTOCOLS = 3
     UNKNOWN = 0
 
     @classmethod
@@ -16,7 +15,6 @@ class Device(Enum):
         mapping = {
             Device.SERIAL: 'Serial',
             Device.MODBUS: 'Modbus',
-            Device.CANBUS: 'Can bus',
             Device.FUTURE_PROTOCOLS: 'Futue protocols',
             Device.UNKNOWN: 'Unsupported protocol'
         }
