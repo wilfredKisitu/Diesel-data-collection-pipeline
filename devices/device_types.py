@@ -3,7 +3,8 @@ from enum import Enum
 class Device(Enum):
     SERIAL = 1
     MODBUS = 2
-    FUTURE_PROTOCOLS = 3
+    USB = 3
+    FUTURE_PROTOCOLS = 4
     UNKNOWN = 0
 
     @classmethod
@@ -15,18 +16,18 @@ class Device(Enum):
         mapping = {
             Device.SERIAL: 'Serial',
             Device.MODBUS: 'Modbus',
+            Device.USB: 'USB',
             Device.FUTURE_PROTOCOLS: 'Futue protocols',
             Device.UNKNOWN: 'Unsupported protocol'
         }
         return mapping.get(self)
 
-        
-
+    
 
 if __name__ == '__main__':
     print('Testing Device types')
 
-    protocol = Device(5)
+    protocol = Device(3)
     print(protocol.get_device_name)
 
     print('Test passed')

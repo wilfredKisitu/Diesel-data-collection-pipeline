@@ -41,6 +41,9 @@ class SerialReader(DataReader):
                 self.sys_log(f'Disconnected from {self.name}')
         except:
             self.sys_log(f'Disconnection from {self.name} failed')
+
+    def change_name(self, device_code):
+        self.name = Device(device_code).get_device_name
             
 
 if __name__ == '__main__':
