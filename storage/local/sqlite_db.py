@@ -15,7 +15,7 @@ class SQLiteDB(DatabaseInterface):
     def connect(self):
         try:
             self.conn = sqlite3.connect(self.db_path)
-            self.row_factory = sqlite3.Row  # enables dict-like rows
+            self.conn.row_factory = sqlite3.Row  # enables dict-like rows
             self.cursor = self.conn.cursor()
             self.log_to_sys(f'Connected to {self.db_path}')
         except Exception as conn_err:
@@ -60,14 +60,14 @@ class SQLiteDB(DatabaseInterface):
         except Exception as update_err:
             self.log_to_sys(f'Failed to update {table} for {self.db_path}')
 
-    def read(self, table:str, data: Dict[str, Any], columns: List[str], where: Dict[str, Any]) ->List[Dict[str, Any]]:
+    def read(self, table:str, columns: List[str]=None, where: Dict[str, Any]=None) ->List[Dict[str, Any]]:
         try:
             cols = ','.join(columns) if columns else "*"
             sql = f'SELECT {cols} FROM {table}'
             values = ()
             if where:
                 where_clause = ' AND '.join([f'{k}=?' for k in where.keys()])
-                sql += f"WHERE {where_clause}"
+                sql += f" WHERE {where_clause}"
                 values = tuple(where.values())
             self.cursor.execute(sql, values)
             rows = self.cursor.fetchall()
@@ -84,10 +84,35 @@ if __name__ == '__main__':
     from storage.local.sqlite_db import SQLiteDB
     print('Testing Local storage')
 
-    db= SQLiteDB('../../DB/diesl_data.db')
+    db= SQLiteDB('DB/diesel_data.db')
     db.connect()
 
-    print(db.get_sys_logs())
+    db.cursor.execute(
+        """
+            CREATE TABLE IF NOT EXISTS engine_data(
+                timestamp TEXT,
+                rpm INTEGER,
+                temperature REAL,
+                fuel_level REAL
+            )
+        """
+    )
+    db.conn.commit()
+    
+    # insert a record
+    db.insert('engine_data', {
+        'timestamp': '2026-03-20 12:00:00',
+        'rpm': 1200,
+        'temperature': 85.5,
+        'fuel_level': 50.2
+    })
+
+    rows = db.read('engine_data')
+    print(rows)
+
+    db.disconnect()
+
+    # print(db.get_sys_logs())
 
     print('Test passed')
     
