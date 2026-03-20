@@ -2,6 +2,7 @@ import sqlite3
 from typing import Any, List, Dict
 from storage.db_interface import DatabaseInterface
 
+
 class SQLiteDB(DatabaseInterface):
 
     def __init__(self, db_path: str):
@@ -13,7 +14,7 @@ class SQLiteDB(DatabaseInterface):
     
     def connect(self):
         try:
-            self.conn = sqlite3.connect(self.dp_path)
+            self.conn = sqlite3.connect(self.db_path)
             self.row_factory = sqlite3.Row  # enables dict-like rows
             self.cursor = self.conn.cursor()
             self.log_to_sys(f'Connected to {self.db_path}')
@@ -79,7 +80,14 @@ class SQLiteDB(DatabaseInterface):
         
 
 if __name__ == '__main__':
+
+    from storage.local.sqlite_db import SQLiteDB
     print('Testing Local storage')
-    
+
+    db= SQLiteDB('../../DB/diesl_data.db')
+    db.connect()
+
+    print(db.get_sys_logs())
+
     print('Test passed')
     

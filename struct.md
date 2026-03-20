@@ -2,6 +2,8 @@
 
 ```
 diesel/
+├── DB/                         # SQLite database files
+│   └── diesel_data.db          # Local SQLite database
 ├── dev/                        # Python virtual environment
 ├── devices/                    # Device communication modules
 │   ├── __init__.py
@@ -16,6 +18,11 @@ diesel/
 ├── main/                       # Entry point scripts
 │   ├── __init__.py
 │   └── run_data_reader.py      # Main runner script
+├── storage/                    # Storage backend modules
+│   ├── __init__.py
+│   ├── db_interface.py         # Abstract storage interface
+│   └── local/                  # Local storage implementations
+│       └── sqlite_db.py        # SQLite storage implementation
 ├── .gitignore
 ├── requirements.txt
 └── struct.md                   # This file
