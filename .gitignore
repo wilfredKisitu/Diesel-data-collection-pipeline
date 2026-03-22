@@ -1,3 +1,5 @@
 dev/
 DB/*
 !DB/.gitkeep
+
+.env.local
